@@ -4,162 +4,148 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>GLOBAL SHOP</title>
-  <script src="https://telegram.org"></script>
   <style>
-    :root {
-      --bg: #0f172a;
-      --card: #1e293b;
-      --card-active: #27354f;
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --accent: #38bdf8;
-      --border: #334155;
-    }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
-    body { background: var(--bg); color: var(--text); padding: 16px; padding-bottom: 40px; }
+    body { background: #0f172a; color: #f8fafc; padding: 16px; padding-bottom: 40px; }
     .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
     .header h1 { font-size: 20px; font-weight: 700; }
-    .currency-switch { display: flex; background: var(--card); border-radius: 10px; padding: 3px; border: 1px solid var(--border); }
-    .currency-btn { background: none; border: none; color: var(--muted); padding: 6px 10px; font-size: 13px; font-weight: 600; border-radius: 8px; cursor: pointer; }
-    .currency-btn.active { background: var(--accent); color: #0f172a; }
+    .currency-switch { display: flex; background: #1e293b; border-radius: 10px; padding: 3px; border: 1px solid #334155; }
+    .currency-btn { background: none; border: none; color: #94a3b8; padding: 6px 10px; font-size: 13px; font-weight: 600; border-radius: 8px; cursor: pointer; }
+    .currency-btn.active { background: #38bdf8; color: #0f172a; }
     .tabs { display: flex; gap: 8px; margin-bottom: 16px; }
-    .tab { flex: 1; text-align: center; background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 10px; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; }
-    .tab.active { border-color: var(--accent); background: rgba(56, 189, 248, 0.15); color: var(--accent); }
+    .tab { flex: 1; text-align: center; background: #1e293b; border: 1px solid #334155; color: #f8fafc; padding: 10px; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; }
+    .tab.active { border-color: #38bdf8; background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
     .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
-    .item { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 14px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; }
-    .item.selected { border-color: var(--accent); background: var(--card-active); box-shadow: 0 0 0 1px var(--accent); }
-    .item-icon { font-size: 26px; margin-bottom: 8px; }
-    .item-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
-    .item-sub { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
-    .item-price { font-size: 16px; font-weight: 700; color: var(--accent); }
-    .section { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin-bottom: 16px; }
-    .section-title { font-size: 14px; color: var(--muted); margin-bottom: 8px; font-weight: 600; }
-    .input { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 10px; font-size: 15px; outline: none; }
+    .grid.hidden { display: none; }
+    .item { background: #1e293b; border: 1px solid #334155; border-radius: 14px; padding: 14px; cursor: pointer; }
+    .item.selected { border-color: #38bdf8; background: #27354f; box-shadow: 0 0 0 1px #38bdf8; }
+    .item-icon { font-size: 24px; margin-bottom: 6px; }
+    .item-title { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+    .item-sub { font-size: 12px; color: #94a3b8; margin-bottom: 8px; }
+    .item-price { font-size: 16px; font-weight: 700; color: #38bdf8; }
+    .section { background: #1e293b; border: 1px solid #334155; border-radius: 14px; padding: 14px; margin-bottom: 16px; }
+    .section-title { font-size: 14px; color: #94a3b8; margin-bottom: 8px; font-weight: 600; }
+    .input { width: 100%; background: #0f172a; border: 1px solid #334155; color: #f8fafc; padding: 12px; border-radius: 10px; font-size: 15px; outline: none; }
     .wallets { display: flex; gap: 8px; margin-bottom: 12px; }
-    .wallet-btn { flex: 1; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 10px 6px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; }
-    .wallet-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(56, 189, 248, 0.1); }
-    .requisites-box { background: var(--bg); border: 1px dashed var(--border); border-radius: 10px; padding: 12px; display: flex; justify-content: space-between; align-items: center; }
+    .wallet-btn { flex: 1; background: #0f172a; border: 1px solid #334155; color: #f8fafc; padding: 10px 6px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .wallet-btn.active { border-color: #38bdf8; color: #38bdf8; background: rgba(56, 189, 248, 0.1); }
+    .requisites-box { background: #0f172a; border: 1px dashed #334155; border-radius: 10px; padding: 12px; display: flex; justify-content: space-between; align-items: center; }
     .req-number { font-size: 15px; font-weight: 700; }
-    .copy-btn { background: var(--card); border: 1px solid var(--border); color: var(--accent); padding: 6px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
-    .buy-btn { width: 100%; background: var(--accent); color: #0f172a; border: none; padding: 15px; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; }
-    .note { font-size: 12px; color: var(--muted); text-align: center; margin-top: 10px; line-height: 1.4; }
+    .copy-btn { background: #1e293b; border: 1px solid #334155; color: #38bdf8; padding: 6px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
+    .buy-btn { width: 100%; background: #38bdf8; color: #0f172a; border: none; padding: 15px; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; }
+    .note { font-size: 12px; color: #94a3b8; text-align: center; margin-top: 10px; line-height: 1.4; }
   </style>
 </head>
 <body>
+
   <div class="header">
     <h1>💎 GLOBAL SHOP</h1>
     <div class="currency-switch">
-      <button type="button" class="currency-btn active" onclick="setCurrency('TJS', this)">TJS</button>
-      <button type="button" class="currency-btn" onclick="setCurrency('RUB', this)">RUB</button>
-      <button type="button" class="currency-btn" onclick="setCurrency('USD', this)">USD</button>
+      <button type="button" class="currency-btn active" onclick="changeCurr('TJS', this)">TJS</button>
+      <button type="button" class="currency-btn" onclick="changeCurr('RUB', this)">RUB</button>
+      <button type="button" class="currency-btn" onclick="changeCurr('USD', this)">USD</button>
     </div>
   </div>
+
   <div class="tabs">
-    <div class="tab active" onclick="setCategory('stars', this)">⭐️ Звёзды</div>
-    <div class="tab" onclick="setCategory('premium', this)">🚀 Premium</div>
-    <div class="tab" onclick="setCategory('gifts', this)">🎁 Подарки</div>
+    <div class="tab active" onclick="showTab('stars', this)">⭐️ Звёзды</div>
+    <div class="tab" onclick="showTab('premium', this)">🚀 Premium</div>
+    <div class="tab" onclick="showTab('gifts', this)">🎁 Подарки</div>
   </div>
-  <div class="grid" id="products-grid"></div>
+
+  <!-- ЗВЁЗДЫ -->
+  <div class="grid" id="tab-stars">
+    <div class="item selected" onclick="pickItem(this, '50 Звёзд')" data-tjs="9.5 сомони" data-rub="85 ₽" data-usd="$0.9">
+      <div class="item-icon">⭐️</div><div class="item-title">50 Звёзд</div><div class="item-sub">Моментально</div><div class="item-price">9.5 сомони</div>
+    </div>
+    <div class="item" onclick="pickItem(this, '100 Звёзд')" data-tjs="19 сомони" data-rub="170 ₽" data-usd="$1.8">
+      <div class="item-icon">⭐️</div><div class="item-title">100 Звёзд</div><div class="item-sub">Популярное</div><div class="item-price">19 сомони</div>
+    </div>
+    <div class="item" onclick="pickItem(this, '250 Звёзд')" data-tjs="47.5 сомони" data-rub="420 ₽" data-usd="$4.5">
+      <div class="item-icon">🌟</div><div class="item-title">250 Звёзд</div><div class="item-sub">Выгодно</div><div class="item-price">47.5 сомони</div>
+    </div>
+    <div class="item" onclick="pickItem(this, '500 Звёзд')" data-tjs="95 сомони" data-rub="840 ₽" data-usd="$9.0">
+      <div class="item-icon">🌟</div><div class="item-title">500 Звёзд</div><div class="item-sub">Хит продаж</div><div class="item-price">95 сомони</div>
+    </div>
+    <div class="item" onclick="pickItem(this, '1000 Звёзд')" data-tjs="190 сомони" data-rub="1680 ₽" data-usd="$18.0">
+      <div class="item-icon">💫</div><div class="item-title">1000 Звёзд</div><div class="item-sub">Максимум</div><div class="item-price">190 сомони</div>
+    </div>
+  </div>
+
+  <!-- PREMIUM -->
+  <div class="grid hidden" id="tab-premium">
+    <div class="item" onclick="pickItem(this, 'Premium 1 мес.')" data-tjs="45 сомони" data-rub="380 ₽" data-usd="$4.2">
+      <div class="item-icon">🚀</div><div class="item-title">Premium 1 мес.</div><div class="item-sub">Без входа</div><div class="item-price">45 сомони</div>
+    </div>
+    <div class="item" onclick="pickItem(this, 'Premium 3 мес.')" data-tjs="130 сомони" data-rub="1100 ₽" data-usd="$12.0">
+      <div class="item-icon">🚀</div><div class="item-title">Premium 3 мес.</div><div class="item-sub">Подарком по @юз</div><div class="item-price">130 сомони</div>
+    </div>
+    <div class="item" onclick="pickItem(this, 'Premium 6 мес.')" data-tjs="190 сомони" data-rub="1600 ₽" data-usd="$17.5">
+      <div class="item-icon">👑</div><div class="item-title">Premium 6 мес.</div><div class="item-sub">Подарком по @юз</div><div class="item-price">190 сомони</div>
+    </div>
+    <div class="item" onclick="pickItem(this, 'Premium 12 мес.')" data-tjs="340 сомони" data-rub="2900 ₽" data-usd="$31.0">
+      <div class="item-icon">👑</div><div class="item-title">Premium 12 мес.</div><div class="item-sub">Выгодно</div><div class="item-price">340 сомони</div>
+    </div>
+  </div>
+
+  <!-- ПОДАРКИ -->
+  <div class="grid hidden" id="tab-gifts">
+    <div class="item" onclick="pickItem(this, 'Подарок 15 Звёзд')" data-tjs="4 сомони" data-rub="35 ₽" data-usd="$0.4">
+      <div class="item-icon">🧸</div><div class="item-title">Мишка / Сердце</div><div class="item-sub">15 ⭐️</div><div class="item-price">4 сомони</div>
+    </div>
+    <div class="item" onclick="pickItem(this, 'Подарок 25 Звёзд')" data-tjs="6 сомони" data-rub="55 ₽" data-usd="$0.6">
+      <div class="item-icon">🌹</div><div class="item-title">Роза / Подарок</div><div class="item-sub">25 ⭐️</div><div class="item-price">6 сомони</div>
+    </div>
+    <div class="item" onclick="pickItem(this, 'Подарок 50 Звёзд')" data-tjs="11 сомони" data-rub="95 ₽" data-usd="$1.0">
+      <div class="item-icon">🎂</div><div class="item-title">Торт / Букет</div><div class="item-sub">50 ⭐️</div><div class="item-price">11 сомони</div>
+    </div>
+    <div class="item" onclick="pickItem(this, 'Подарок 100 Звёзд')" data-tjs="19 сомони" data-rub="170 ₽" data-usd="$1.8">
+      <div class="item-icon">💎</div><div class="item-title">Алмаз / Кубок</div><div class="item-sub">100 ⭐️</div><div class="item-price">19 сомони</div>
+    </div>
+  </div>
+
   <div class="section">
     <div class="section-title">1. Куда отправить покупку?</div>
     <input type="text" id="username-input" class="input" placeholder="Введите ваш @username в Telegram" />
   </div>
+
   <div class="section">
     <div class="section-title">2. Выберите кошелёк для перевода</div>
     <div class="wallets">
-      <button type="button" class="wallet-btn active" onclick="setWallet('dc', this)">Душанбе Сити</button>
-      <button type="button" class="wallet-btn" onclick="setWallet('alif', this)">Алиф</button>
-      <button type="button" class="wallet-btn" onclick="setWallet('visa', this)">Visa</button>
+      <button type="button" class="wallet-btn active" onclick="pickWallet('Душанбе Сити', '+992029093838', this)">Душанбе Сити</button>
+      <button type="button" class="wallet-btn" onclick="pickWallet('Алиф', '+992029093838', this)">Алиф</button>
+      <button type="button" class="wallet-btn" onclick="pickWallet('Карта Visa', '4439200023951147', this)">Visa</button>
     </div>
     <div class="requisites-box">
       <div>
-        <div style="font-size: 11px; color: var(--muted); margin-bottom: 2px;" id="wallet-label">Душанбе Сити:</div>
+        <div style="font-size: 11px; color: #94a3b8; margin-bottom: 2px;" id="wallet-label">Душанбе Сити:</div>
         <div class="req-number" id="wallet-number">+992029093838</div>
       </div>
-      <button type="button" class="copy-btn" id="copy-btn" onclick="copyRequisites()">Копировать</button>
+      <button type="button" class="copy-btn" id="copy-btn" onclick="copyNum()">Копировать</button>
     </div>
   </div>
-  <button type="button" class="buy-btn" onclick="submitOrder()">Я оплатил — отправить чек</button>
+
+  <button type="button" class="buy-btn" onclick="sendOrder()">Я оплатил — отправить чек</button>
   <div class="note">После нажатия откроется чат с @ilikemoney777. Прикрепите скриншот чека.</div>
 
   <script>
-    var tg = (window.Telegram && window.Telegram.WebApp) ? window.Telegram.WebApp : null;
-    if (tg) { tg.ready(); tg.expand(); }
+    var cur = 'tjs';
+    var chosenName = '50 Звёзд';
+    var chosenPrice = '9.5 сомони';
+    var walletName = 'Душанбе Сити';
+    var walletNum = '+992029093838';
 
-    var WALLETS = {
-      dc:   { name: 'Душанбе Сити', number: '+992029093838' },
-      alif: { name: 'Алиф',         number: '+992029093838' },
-      visa: { name: 'Карта Visa',   number: '4439200023951147' }
-    };
-
-    var PRODUCTS = {
-      stars: [
-        { id: 's50',   icon: '⭐️', title: '50 Звёзд',    sub: 'Моментально', prices: { TJS: 9.5,  RUB: 85,   USD: 0.9 } },
-        { id: 's100',  icon: '⭐️', title: '100 Звёзд',   sub: 'Популярное',  prices: { TJS: 19,   RUB: 170,  USD: 1.8 } },
-        { id: 's250',  icon: '🌟', title: '250 Звёзд',   sub: 'Выгодно',     prices: { TJS: 47.5, RUB: 420,  USD: 4.5 } },
-        { id: 's500',  icon: '🌟', title: '500 Звёзд',   sub: 'Хит продаж',  prices: { TJS: 95,   RUB: 840,  USD: 9.0 } },
-        { id: 's1000', icon: '💫', title: '1000 Звёзд',  sub: 'Максимум',    prices: { TJS: 190,  RUB: 1680, USD: 18.0 } }
-      ],
-      premium: [
-        { id: 'p1',  icon: '🚀', title: 'Premium 1 мес.',  sub: 'Без входа',      prices: { TJS: 45,  RUB: 380,  USD: 4.2 } },
-        { id: 'p3',  icon: '🚀', title: 'Premium 3 мес.',  sub: 'Подарком по @юз', prices: { TJS: 130, RUB: 1100, USD: 12.0 } },
-        { id: 'p6',  icon: '👑', title: 'Premium 6 мес.',  sub: 'Подарком по @юз', prices: { TJS: 190, RUB: 1600, USD: 17.5 } },
-        { id: 'p12', icon: '👑', title: 'Premium 12 мес.', sub: 'Выгодно',         prices: { TJS: 340, RUB: 2900, USD: 31.0 } }
-      ],
-      gifts: [
-        { id: 'g15',  icon: '🧸', title: 'Мишка / Сердце', sub: '15 ⭐️',  prices: { TJS: 4,  RUB: 35,  USD: 0.4 } },
-        { id: 'g25',  icon: '🌹', title: 'Роза / Подарок', sub: '25 ⭐️',  prices: { TJS: 6,  RUB: 55,  USD: 0.6 } },
-        { id: 'g50',  icon: '🎂', title: 'Торт / Букет',   sub: '50 ⭐️',  prices: { TJS: 11, RUB: 95,  USD: 1.0 } },
-        { id: 'g100', icon: '💎', title: 'Алмаз / Кубок',  sub: '100 ⭐️', prices: { TJS: 19, RUB: 170, USD: 1.8 } }
-      ]
-    };
-
-    var SYMBOLS = { TJS: 'сомони', RUB: '₽', USD: '$' };
-    var currentCurrency = 'TJS';
-    var currentCategory = 'stars';
-    var selectedProduct = PRODUCTS.stars.slice(0, 1).pop();
-    var currentWallet = 'dc';
-
-    if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.username) {
-      document.getElementById('username-input').value = '@' + tg.initDataUnsafe.user.username;
-    }
-
-    function renderProducts() {
-      var grid = document.getElementById('products-grid');
-      grid.innerHTML = '';
-      var list = PRODUCTS[currentCategory];
-      for (var i = 0; i < list.length; i++) {
-        (function(item) {
-          var div = document.createElement('div');
-          div.className = 'item' + (selectedProduct.id === item.id ? ' selected' : '');
-          div.onclick = function() { selectedProduct = item; renderProducts(); };
-          var val = item.prices[currentCurrency];
-          var priceText = currentCurrency === 'USD' ? ('$' + val) : (val + ' ' + SYMBOLS[currentCurrency]);
-          div.innerHTML = '<div><div class="item-icon">' + item.icon + '</div><div class="item-title">' + item.title + '</div><div class="item-sub">' + item.sub + '</div></div><div class="item-price">' + priceText + '</div>';
-          grid.appendChild(div);
-        })(list.slice(i, i + 1).pop());
+    function changeCurr(c, btn) {
+      cur = c.toLowerCase();
+      var btns = document.querySelectorAll('.currency-btn');
+      for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+      btn.classList.add('active');
+      var items = document.querySelectorAll('.item');
+      for (var j = 0; j < items.length; j++) {
+        var val = items[j].getAttribute('data-' + cur);
+        items[j].querySelector('.item-price').innerText = val;
+        if (items[j].classList.contains('selected')) chosenPrice = val;
       }
     }
 
-    function setCurrency(curr, btn) {
-      currentCurrency = curr;
-      var btns = document.querySelectorAll('.currency-btn');
-      for (var i = 0; i < btns.length; i++) btns.item(i).classList.remove('active');
-      btn.classList.add('active');
-      renderProducts();
-    }
-
-    function setCategory(cat, btn) {
-      currentCategory = cat;
-      selectedProduct = PRODUCTS[cat].slice(0, 1).pop();
-      var tabs = document.querySelectorAll('.tab');
-      for (var i = 0; i < tabs.length; i++) tabs.item(i).classList.remove('active');
-      btn.classList.add('active');
-      renderProducts();
-    }
-
-    function setWallet(key, btn) {
-      currentWallet = key;
-      var btns = document.querySelectorAll('.wallet-btn');
-      for (var i = 0; i < btns.length; i++) btns.item(i).classList.remove('active');
-      btn.classList.add('active');
+    function showTab(name, btn) {
