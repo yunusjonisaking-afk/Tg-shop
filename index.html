@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>TG Store — Звёзды, Premium и Подарки</title>
+  <title>GLOBAL SHOP — Звёзды, Premium и Подарки</title>
   <script src="https://telegram.org"></script>
   <style>
     :root {
@@ -58,11 +58,11 @@
 <body>
 
   <div class="header">
-    <h1>💎 TG Магазин</h1>
+    <h1>💎 GLOBAL SHOP</h1>
     <div class="currency-switch">
-      <button class="currency-btn active" onclick="setCurrency('TJS', this)">TJS</button>
-      <button class="currency-btn" onclick="setCurrency('RUB', this)">RUB</button>
-      <button class="currency-btn" onclick="setCurrency('USD', this)">USD</button>
+      <button type="button" class="currency-btn active" onclick="setCurrency('TJS', this)">TJS</button>
+      <button type="button" class="currency-btn" onclick="setCurrency('RUB', this)">RUB</button>
+      <button type="button" class="currency-btn" onclick="setCurrency('USD', this)">USD</button>
     </div>
   </div>
 
@@ -82,25 +82,28 @@
   <div class="section">
     <div class="section-title">2. Выберите кошелёк для перевода</div>
     <div class="wallets">
-      <button class="wallet-btn active" onclick="setWallet('dc', this)">Душанбе Сити</button>
-      <button class="wallet-btn" onclick="setWallet('alif', this)">Алиф</button>
-      <button class="wallet-btn" onclick="setWallet('visa', this)">Visa</button>
+      <button type="button" class="wallet-btn active" onclick="setWallet('dc', this)">Душанбе Сити</button>
+      <button type="button" class="wallet-btn" onclick="setWallet('alif', this)">Алиф</button>
+      <button type="button" class="wallet-btn" onclick="setWallet('visa', this)">Visa</button>
     </div>
     <div class="requisites-box">
       <div>
         <div style="font-size: 11px; color: var(--muted); margin-bottom: 2px;" id="wallet-label">Душанбе Сити (нажмите скопировать):</div>
-        <div class="req-number" id="wallet-number"></div>
+        <div class="req-number" id="wallet-number">+992029093838</div>
       </div>
-      <button class="copy-btn" id="copy-btn" onclick="copyRequisites()">Копировать</button>
+      <button type="button" class="copy-btn" id="copy-btn" onclick="copyRequisites()">Копировать</button>
     </div>
   </div>
 
-  <button class="buy-btn" onclick="submitOrder()">Я оплатил — отправить чек</button>
+  <button type="button" class="buy-btn" onclick="submitOrder()">Я оплатил — отправить чек</button>
   <div class="note">После нажатия откроется чат с @ilikemoney777 с готовым заказом. Прикрепите скриншот чека для выдачи.</div>
 
   <script>
-    const tg = window.Telegram.WebApp;
-    tg.expand();
+    const tg = (window.Telegram && window.Telegram.WebApp) ? window.Telegram.WebApp : null;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+    }
 
     const WALLETS = {
       dc:   { name: 'Душанбе Сити', number: '+992029093838' },
@@ -112,11 +115,11 @@
 
     const PRODUCTS = {
       stars: [
-        { id: 's50',   icon: '⭐️', title: '50 Звёзд',    sub: 'Моментально', prices: { TJS: 9.5, RUB: 85,   USD: 0.9 } },
-        { id: 's100',  icon: '⭐️', title: '100 Звёзд',   sub: 'Популярное',  prices: { TJS: 19,  RUB: 170,  USD: 1.8 } },
-        { id: 's250',  icon: '🌟', title: '250 Звёзд',   sub: 'Выгодно',     prices: { TJS: 47.5, RUB: 420, USD: 4.5 } },
-        { id: 's500',  icon: '🌟', title: '500 Звёзд',   sub: 'Хит продаж',  prices: { TJS: 95,  RUB: 840,  USD: 9.0 } },
-        { id: 's1000', icon: '💫', title: '1000 Звёзд',  sub: 'Максимум',    prices: { TJS: 190, RUB: 1680, USD: 18.0 } }
+        { id: 's50',   icon: '⭐️', title: '50 Звёзд',    sub: 'Моментально', prices: { TJS: 9.5,  RUB: 85,   USD: 0.9 } },
+        { id: 's100',  icon: '⭐️', title: '100 Звёзд',   sub: 'Популярное',  prices: { TJS: 19,   RUB: 170,  USD: 1.8 } },
+        { id: 's250',  icon: '🌟', title: '250 Звёзд',   sub: 'Выгодно',     prices: { TJS: 47.5, RUB: 420,  USD: 4.5 } },
+        { id: 's500',  icon: '🌟', title: '500 Звёзд',   sub: 'Хит продаж',  prices: { TJS: 95,   RUB: 840,  USD: 9.0 } },
+        { id: 's1000', icon: '💫', title: '1000 Звёзд',  sub: 'Максимум',    prices: { TJS: 190,  RUB: 1680, USD: 18.0 } }
       ],
       premium: [
         { id: 'p1',  icon: '🚀', title: 'Premium 1 мес.',  sub: 'Без входа в аккаунт', prices: { TJS: 45,  RUB: 380,  USD: 4.2 } },
@@ -136,10 +139,10 @@
 
     let currentCurrency = 'TJS';
     let currentCategory = 'stars';
-    let selectedProduct = PRODUCTS.stars[0];
+    let selectedProduct = PRODUCTS.stars.at(0);
     let currentWallet = 'dc';
 
-    if (tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.username) {
+    if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.username) {
       document.getElementById('username-input').value = '@' + tg.initDataUnsafe.user.username;
     }
 
@@ -148,7 +151,7 @@
       grid.innerHTML = '';
       PRODUCTS[currentCategory].forEach(item => {
         const div = document.createElement('div');
-        div.className = 'item' + (selectedProduct.id === item.id ? ' selected' : '');
+        div.className = 'item' + (selectedProduct && selectedProduct.id === item.id ? ' selected' : '');
         div.onclick = () => { selectedProduct = item; renderProducts(); };
         const priceVal = item.prices[currentCurrency];
         const priceText = currentCurrency === 'USD' ? `$${priceVal}` : `${priceVal} ${SYMBOLS[currentCurrency]}`;
@@ -173,11 +176,4 @@
 
     function setCategory(cat, btn) {
       currentCategory = cat;
-      selectedProduct = PRODUCTS[cat][0];
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      btn.classList.add('active');
-      renderProducts();
-    }
-
-    function setWallet(key, btn) {
-      currentWallet = key;
+      selectedProduct = PRODUCTS[cat].at(0);
